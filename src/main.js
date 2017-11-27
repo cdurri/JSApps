@@ -1,3 +1,50 @@
+const soundDatas = [
+  {
+    dataKey: 65,
+    keyboardKey: 'A',
+    sound: 'clap'
+  },
+  {
+    dataKey: 83,
+    keyboardKey: 'S',
+    sound: 'hihat'
+  },
+  {
+    dataKey: 68,
+    keyboardKey: 'D',
+    sound: 'kick'
+  },
+  {
+    dataKey: 70,
+    keyboardKey: 'F',
+    sound: 'openhat'
+  },
+  {
+    dataKey: 71,
+    keyboardKey: 'G',
+    sound: 'boom'
+  },
+  {
+    dataKey: 72,
+    keyboardKey: 'H',
+    sound: 'ride'
+  },
+  {
+    dataKey: 74,
+    keyboardKey: 'J',
+    sound: 'snare'
+  },
+  {
+    dataKey: 75,
+    keyboardKey: 'K',
+    sound: 'tom'
+  },
+  {
+    dataKey: 76,
+    keyboardKey: 'L',
+    sound: 'tink'
+  }
+]
 
 function playSound(e) {
   const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
@@ -16,3 +63,14 @@ function removeTransition(e) {
 const keys = document.querySelectorAll('.key');
 keys.forEach(key => key.addEventListener('transitionend', removeTransition));
 window.addEventListener('keydown', playSound);
+
+const markup = `
+  ${soundDatas.map(soundData => `
+    <div data-key="${soundData.dataKey}" class="key">
+      <kbd>${soundData.keyboardKey}</kbd>
+      <span class="sound">${soundData.sound}</span>
+    </div>
+  `).join('')}
+`;
+
+document.querySelector('.keys').innerHTML = markup;
