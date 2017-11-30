@@ -46,6 +46,13 @@ const soundDatas = [
   }
 ]
 
+const shuffleKeys =
+  arr =>
+  arr.sort(() =>
+  Math.random() - 0.5);
+
+shuffleKeys(soundDatas);
+
 function playSound(e) {
   const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
   const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
@@ -60,10 +67,6 @@ function removeTransition(e) {
   this.classList.remove('playing');
 }
 
-const keys = document.querySelectorAll('.key');
-keys.forEach(key => key.addEventListener('transitionend', removeTransition));
-window.addEventListener('keydown', playSound);
-
 const markup = `
   ${soundDatas.map(soundData => `
     <div data-key="${soundData.dataKey}" class="key">
@@ -74,3 +77,7 @@ const markup = `
 `;
 
 document.querySelector('.keys').innerHTML = markup;
+
+const keys = document.querySelectorAll('.key');
+keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+window.addEventListener('keydown', playSound);
