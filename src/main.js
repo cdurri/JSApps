@@ -2,47 +2,56 @@ const soundDatas = [
   {
     dataKey: 65,
     keyboardKey: 'A',
-    sound: 'clap'
+    sound: 'clap',
+    source: 'sounds/clap.wav'
   },
   {
     dataKey: 83,
     keyboardKey: 'S',
-    sound: 'hihat'
+    sound: 'hihat',
+    source: 'sounds/hihat.wav'
   },
   {
     dataKey: 68,
     keyboardKey: 'D',
-    sound: 'kick'
+    sound: 'kick',
+    source: 'sounds/kick.wav'
   },
   {
     dataKey: 70,
     keyboardKey: 'F',
-    sound: 'openhat'
+    sound: 'openhat',
+    source: "sounds/openhat.wav"
   },
   {
     dataKey: 71,
     keyboardKey: 'G',
-    sound: 'boom'
+    sound: 'boom',
+    source: "sounds/boom.wav"
   },
   {
     dataKey: 72,
     keyboardKey: 'H',
-    sound: 'ride'
+    sound: 'ride',
+    source: "sounds/ride.wav"
   },
   {
     dataKey: 74,
     keyboardKey: 'J',
-    sound: 'snare'
+    sound: 'snare',
+    source: "sounds/snare.wav"
   },
   {
     dataKey: 75,
     keyboardKey: 'K',
-    sound: 'tom'
+    sound: 'tom',
+    source: "sounds/tom.wav"
   },
   {
     dataKey: 76,
     keyboardKey: 'L',
-    sound: 'tink'
+    sound: 'tink',
+    source: "sounds/tink.wav"
   }
 ]
 
@@ -67,11 +76,24 @@ function removeTransition(e) {
   this.classList.remove('playing');
 }
 
+function playSoundAuto(index = 0) {
+  const audioElements = document.getElementsByClassName('sounds');
+
+  audioElements[index].play();
+  audioElements[index].addEventListener('ended', () => {
+    index += 1;
+    if(index < audioElements.length) {
+      playSoundAuto(index);
+    }
+  });
+}
+
 const markup = `
   ${soundDatas.map(soundData => `
     <div data-key="${soundData.dataKey}" class="key">
       <kbd>${soundData.keyboardKey}</kbd>
       <span class="sound">${soundData.sound}</span>
+      <audio class="sounds" src="${soundData.source}"></audio>
     </div>
   `).join('')}
 `;
@@ -81,3 +103,7 @@ document.querySelector('.keys').innerHTML = markup;
 const keys = document.querySelectorAll('.key');
 keys.forEach(key => key.addEventListener('transitionend', removeTransition));
 window.addEventListener('keydown', playSound);
+
+window.onload = () => {
+  playSoundAuto();
+}
