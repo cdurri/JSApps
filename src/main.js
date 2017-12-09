@@ -1,3 +1,5 @@
+const audioElements = document.getElementsByClassName('sounds');
+
 const soundDatas = [
   {
     dataKey: 65,
@@ -68,7 +70,7 @@ function playSound(e) {
   if (!audio) return; // stop the function from running all together
   audio.currentTime = 0; // rewind to the start
   audio.play();
-  key.classList.add('playing');
+  key.classList.add('playing');// changes appearance of button when key is pressed
 }
 
 function removeTransition(e) {
@@ -77,15 +79,19 @@ function removeTransition(e) {
 }
 
 function playSoundAuto(index = 0) {
-  const audioElements = document.getElementsByClassName('sounds');
-
   audioElements[index].play();
+  keyPressAuto(index);
   audioElements[index].addEventListener('ended', () => {
     index += 1;
     if(index < audioElements.length) {
       playSoundAuto(index);
+      keyPressAuto(index);
     }
   });
+}
+
+function keyPressAuto(index) {
+  audioElements[index].parentNode.classList.add('playing');
 }
 
 const markup = `
