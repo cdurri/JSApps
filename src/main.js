@@ -84,8 +84,10 @@ function playSoundAuto(index = 0) {
   audioElements[index].addEventListener('ended', () => {
     index += 1;
     if(index < audioElements.length) {
-      playSoundAuto(index);
-      keyPressAuto(index);
+      setTimeout(() => {
+        playSoundAuto(index);
+        keyPressAuto(index);
+      }, 5000);
     }
   });
 }
