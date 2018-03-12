@@ -87,9 +87,16 @@ function playSoundAuto(index = 0) {
       setTimeout(() => {
         playSoundAuto(index);
         keyPressAuto(index);
-      }, 5000);
+      }, 500);
+    } else {
+      displayPrompt();
     }
   });
+}
+
+function displayPrompt() {
+  const prompt = document.querySelector('.prompt');
+  prompt.classList.add('fade-in');
 }
 
 function keyPressAuto(index) {
