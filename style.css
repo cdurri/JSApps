@@ -54,21 +54,26 @@ kbd {
 }
 
 .prompt {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: absolute;
-  display: block;
   color: #fff;
+  font-size: 60px;
   top: 0;
   left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.fade-out {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s 1s, opacity 1s linear;
 }
 
 .fade-in {
   visibility: visible;
   opacity: 1;
   transition: opacity 1s linear;
-}
-
-.fade-out {
-  visibility: hidden;
-  opacity: 0;
-  transition: visibility 0s 1s, opacity 2s linear;
 }

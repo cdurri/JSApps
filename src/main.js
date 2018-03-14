@@ -89,14 +89,17 @@ function playSoundAuto(index = 0) {
         keyPressAuto(index);
       }, 500);
     } else {
-      displayPrompt();
+      displayRemovePrompt();
     }
   });
 }
 
-function displayPrompt() {
+function displayRemovePrompt() {
   const prompt = document.querySelector('.prompt');
   prompt.classList.add('fade-in');
+  setTimeout(() => {
+       prompt.classList.remove('fade-in');
+   }, 3000);
 }
 
 function keyPressAuto(index) {
