@@ -86,7 +86,6 @@ function playSoundAuto(index = 0) {
     if(index < audioElements.length) {
       setTimeout(() => {
         playSoundAuto(index);
-        keyPressAuto(index);
       }, 500);
     } else {
       displayRemovePrompt();
@@ -94,11 +93,18 @@ function playSoundAuto(index = 0) {
   });
 }
 
+function playRandomSound() {
+  const randomSound = Math.floor( Math.random() * 8 ) + 1;
+  console.log(randomSound);
+  audioElements[randomSound].play();
+}
+
 function displayRemovePrompt() {
   const prompt = document.querySelector('.prompt');
   prompt.classList.add('fade-in');
   setTimeout(() => {
        prompt.classList.remove('fade-in');
+       //playRandomSound();
    }, 3000);
 }
 
