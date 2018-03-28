@@ -49,7 +49,7 @@ kbd {
   color: #ffc600;
 }
 
-.prompt {
+.prompt, .success, .fail {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -60,6 +60,10 @@ kbd {
   left: 0;
   right: 0;
   bottom: 0;
+}
+
+.prompt, .success, .fail h1 {
+  margin-top: -150px;
 }
 
 .fade-out {

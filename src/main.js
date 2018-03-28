@@ -67,10 +67,21 @@ shuffleKeys(soundDatas);
 function playSound(e) {
   const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
   const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+  const keyPressed = key.getAttribute('data-key');
+  const successFeedback = document.querySelector('.success');
+  const failFeedback = document.querySelector('.fail');
+
   if (!audio) return; // stop the function from running all together
   audio.currentTime = 0; // rewind to the start
   audio.play();
   key.classList.add('playing');// changes appearance of button when key is pressed
+
+  if(keyPressed === randomSoundKey) {
+    failFeedback.classList.remove('fade-in');
+    successFeedback.classList.add('fade-in');
+  } else {
+    failFeedback.classList.add('fade-in');
+  }
 }
 
 function removeTransition(e) {
@@ -96,7 +107,6 @@ function playSounds(index) {
 }
 
 function playRandomSound() {
-  const randomSound = Math.floor( Math.random() * 8 ) + 1;
   audioElements[randomSound].play();
 }
 
@@ -123,6 +133,9 @@ const markupSound = `
 `;
 
 document.querySelector('.keys').innerHTML = markupSound;
+
+const randomSound = Math.floor( Math.random() * 8 ) + 1;
+const randomSoundKey = audioElements[randomSound].parentNode.getAttribute('data-key');
 
 const keys = document.querySelectorAll('.key');
 keys.forEach(key => key.addEventListener('transitionend', removeTransition));
