@@ -81,21 +81,22 @@ function removeTransition(e) {
 function playSoundAuto(index = 0) {
   audioElements[index].play();
   keyPressAuto(index);
-  audioElements[index].addEventListener('ended', () => {
+  audioElements[index].addEventListener('ended', playSounds(index)); // waits until sound has finished playing
+}
+
+function playSounds(index) {
     index += 1;
     if(index < audioElements.length) {
       setTimeout(() => {
-        playSoundAuto(index);
-      }, 500);
+        audioElements[index].removeEventListener('ended', playSoundAuto(index)); // need to remove eventlistener to prevent all sounds being played when playRandomSound() is run
+      }, 2000);
     } else {
       displayRemovePrompt();
     }
-  });
 }
 
 function playRandomSound() {
   const randomSound = Math.floor( Math.random() * 8 ) + 1;
-  console.log(randomSound);
   audioElements[randomSound].play();
 }
 
@@ -104,7 +105,6 @@ function displayRemovePrompt() {
   prompt.classList.add('fade-in');
   setTimeout(() => {
        prompt.classList.remove('fade-in');
-       //playRandomSound();
    }, 3000);
 }
 
@@ -112,7 +112,7 @@ function keyPressAuto(index) {
   audioElements[index].parentNode.classList.add('playing');
 }
 
-const markup = `
+const markupSound = `
   ${soundDatas.map(soundData => `
     <div data-key="${soundData.dataKey}" class="key">
       <kbd>${soundData.keyboardKey}</kbd>
@@ -122,7 +122,7 @@ const markup = `
   `).join('')}
 `;
 
-document.querySelector('.keys').innerHTML = markup;
+document.querySelector('.keys').innerHTML = markupSound;
 
 const keys = document.querySelectorAll('.key');
 keys.forEach(key => key.addEventListener('transitionend', removeTransition));
@@ -130,4 +130,7 @@ window.addEventListener('keydown', playSound);
 
 window.onload = () => {
   playSoundAuto();
+  setTimeout(() => {
+    playRandomSound();
+  }, 21000);
 }
