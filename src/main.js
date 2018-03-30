@@ -1,4 +1,5 @@
 const audioElements = document.getElementsByClassName('sounds');
+let correct = false;
 
 const soundDatas = [
   {
@@ -77,10 +78,13 @@ function playSound(e) {
   key.classList.add('playing');// changes appearance of button when key is pressed
 
   if(keyPressed === randomSoundKey) {
+    correct = true;
     failFeedback.classList.remove('fade-in');
     successFeedback.classList.add('fade-in');
   } else {
-    failFeedback.classList.add('fade-in');
+    if ( !correct ) {
+      failFeedback.classList.add('fade-in');
+    }
   }
 }
 
@@ -103,6 +107,10 @@ function playSounds(index) {
       }, 2000);
     } else {
       displayRemovePrompt();
+      setTimeout(() => {
+        playRandomSound();
+        window.addEventListener('keydown', playSound);
+      }, 5000);
     }
 }
 
@@ -132,18 +140,14 @@ const markupSound = `
   `).join('')}
 `;
 
-document.querySelector('.keys').innerHTML = markupSound;
+document.querySelector('.keys').innerHTML += markupSound;
 
 const randomSound = Math.floor( Math.random() * 8 ) + 1;
 const randomSoundKey = audioElements[randomSound].parentNode.getAttribute('data-key');
 
 const keys = document.querySelectorAll('.key');
 keys.forEach(key => key.addEventListener('transitionend', removeTransition));
-window.addEventListener('keydown', playSound);
 
 window.onload = () => {
   playSoundAuto();
-  setTimeout(() => {
-    playRandomSound();
-  }, 21000);
 }
